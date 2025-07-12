@@ -158,7 +158,7 @@ async def chat(query: str = Form(...), session_id: str = Form(...)):
         
         # Time similarity search
         start_time = time.time()
-        docs = vector_store.similarity_search(query)
+        docs = vector_store.similarity_search(query,k=2)
         search_time = (time.time() - start_time) * 1000
         performance_monitor.metrics["similarity_search"].append(search_time)
         print(f"[PERFORMANCE] Similarity Search: {search_time:.2f}ms")
@@ -219,3 +219,18 @@ async def save_performance_metrics():
 @app.get("/")
 def root():
     return {"status": "FastAPI backend running"}
+
+if __name__ == "__main__":
+    import uvicorn
+    import os
+    
+    # Get port from environment variable (Render provides this)
+    port = int(os.environ.get("PORT", 8000))
+    
+    # Run the server
+    uvicorn.run(
+        "backend:app",
+        host="0.0.0.0",  # Important: Use 0.0.0.0 to bind to all interfaces
+        port=port,
+        reload=False  # Set to False for production
+    )
