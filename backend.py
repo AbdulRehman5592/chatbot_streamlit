@@ -220,4 +220,20 @@ async def save_performance_metrics():
 def root():
     return {"status": "FastAPI backend running"}
 
+# Add this at the end of the file
+if __name__ == "__main__":
+    import uvicorn
+    import os
+    
+    # Get port from environment variable (Render provides this)
+    port = int(os.environ.get("PORT", 8000))
+    
+    # Run the server
+    uvicorn.run(
+        "backend:app",
+        host="0.0.0.0",  # Important: Use 0.0.0.0 to bind to all interfaces
+        port=port,
+        reload=False  # Set to False for production
+    )
+
 
