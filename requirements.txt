@@ -45,5 +45,4 @@ glob
 # Type hints and validation
 pydantic
 
-# Optional: Redis (if you plan to use it)
-# redis 
+ 
